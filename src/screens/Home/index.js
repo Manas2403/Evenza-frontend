@@ -60,6 +60,7 @@ const Home = ({ navigation }) => {
                             onClick={() => {
                                 navigation.navigate("EventDetails");
                             }}
+                            isRegister={true}
                         />
                     ))}
             </View>
