@@ -1,0 +1,2 @@
+web: 82076083385-nbd1jfc30hdv74i835r1q0vbcro5o3gp.apps.googleusercontent.com
+android: 82076083385-42384eifb70nntd4n6hmpjb62fls17re.apps.googleusercontent.com
