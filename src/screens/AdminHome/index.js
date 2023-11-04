@@ -74,8 +74,9 @@ const AdminHome = ({ navigation }) => {
               registered={true}
               registerationCount={event.capacity}
               onClick={() => {
-                navigation.navigate("EventDetails");
+                navigation.navigate("ApproveRegistration");
               }}
+              isRegister={false}
             />
           ))}
       </View>
