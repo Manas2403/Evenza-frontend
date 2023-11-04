@@ -60,7 +60,7 @@ const Register = ({ navigation }) => {
     return (
         <SafeAreaView className="flex-1 bg-white w-full">
             <View className="bg-white flex-1 justify-center items-center">
-                <Text>{JSON.stringify(userInfo)}</Text>
+                <Text>{}</Text>
                 <View className="p-6">
                     <Text className="text-5xl text-purple-900 font-semibold text-center  mt-10 ">
                         Evenza
@@ -71,20 +71,26 @@ const Register = ({ navigation }) => {
                         India's #1 Conference Management App
                     </Text>
                 </View>
-                <View className="p-8 mt-8">
-                    <Button
-                        icon={() => <Icon />}
+                <View className="p-8 mt-8 w-4/5">
+                    {/* <Button
+                        // icon={() => <Icon />}
                         onPress={() =>{
                             return navigation.navigate("Home")
                         }}
-                        className="bg-purple-50 border-2 border-black rounded-md flex p-1 justify-evenly items-center"
+                        className="w-full bg-purple-50 border-2 border-black rounded-md flex p-1 justify-evenly items-center"
                     >
-                        <Text>Sign In with Google</Text>
-                    </Button>
+                        <Text>Sign In</Text>
+                    </Button> */}
                     <Button mode="outlined" className="mt-4 rounded-lg bg-purple-50" onPress={()=>{
                        return navigation.navigate("AdminHome") 
                     }}>
-                        Admin Login
+                        Sign In
+                    </Button>
+                    <Button mode="outlined" className="mt-4 rounded-lg bg-purple-50" onPress={()=>{
+                       return navigation.navigate("RegisterUser") 
+                    //    return navigation.navigate("AdminHome") 
+                    }}>
+                        Sign Up
                     </Button>
                 </View>
             </View>
