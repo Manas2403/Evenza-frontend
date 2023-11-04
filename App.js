@@ -57,6 +57,7 @@ export default function App() {
             <Stack.Screen name="RegisterUser" component={RegisterUser} />
             <Stack.Screen name="AdminProfile" component={AdminProfile} />
             <Stack.Screen name="ApproveRegistration" component={ApproveRegistration} />
+            <Stack.Screen name="SignIn" component={SignIn} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
