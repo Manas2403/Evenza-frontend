@@ -82,7 +82,7 @@ const Register = ({ navigation }) => {
                         <Text>Sign In</Text>
                     </Button> */}
                     <Button mode="outlined" className="mt-4 rounded-lg bg-purple-50" onPress={()=>{
-                       return navigation.navigate("AdminHome") 
+                       return navigation.navigate("SignIn") 
                     }}>
                         Sign In
                     </Button>
