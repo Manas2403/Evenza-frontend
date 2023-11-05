@@ -1,82 +1,76 @@
-// import React, { useState } from 'react';
-// import { View, Text, TextInput, StyleSheet } from 'react-native';
-// import { Button } from 'react-native-paper';
-
-// const SignIn = () => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleLogin = () => {
-//     // Your login logic here
-//     // Example: Check if the email and password match the user in your database
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>Login</Text>
-//       <TextInput
-//         style={styles.input}
-//         placeholder="Email"
-//         onChangeText={(text) => setEmail(text)}
-//         keyboardType="email-address"
-//       />
-//       <TextInput
-//         style={styles.input}
-//         placeholder="Password"
-//         onChangeText={(text) => setPassword(text)}
-//         secureTextEntry
-//       />
-//       <Button mode="outlined" className="mt-8 bg-purple-100 text-white rounded" onPress={handleLogin}>
-//             Login
-//           </Button>
-      
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     padding: 16,
-//   },
-//   title: {
-//     fontSize: 24,
-//     marginBottom: 16,
-//     textAlign: 'center',
-//   },
-//   input: {
-//     height: 40,
-//     borderColor: 'gray',
-//     borderWidth: 1,
-//     marginBottom: 16,
-//     paddingHorizontal: 8,
-//   },
-  
-// });
-
-// export default SignIn;
-
-
-
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button, RadioButton } from 'react-native-paper';
-
-const SignIn = () => {
+import MessagePrompt from '../../components/MessagePrompt';
+import { loginUser } from '../../utils/Api';
+import { set } from 'react-hook-form';
+const SignIn = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [selectedRole, setSelectedRole] = useState('User');
+   const [showAlert, setShowAlert] = useState(false); // State to control the visibility of the alert
+   const [alertMessage, setAlertMessage] = useState("");
+   const closeAlert = () => {
+     setShowAlert(false);
+   };
+const handleLogin = async () => {
+  if (email === "" || password === "") {
+    setAlertMessage("Either email or password is empty");
+    setShowAlert(true);
+    return;
+  }
 
-  const handleLogin = () => {
-    // Your login logic here
-    // Example: Check if the email and password match the user in your database
-    if (selectedRole === 'Admin') {
-      // Handle Admin login
-    } else {
-      // Handle User login
-    }
+  // Create a user data object with email and password
+  const userData = {
+    email,
+    password,
   };
+  if(selectedRole === 'User'){
+    try {
+      // Send the user data to the server for verification
+      const response = await loginUser(userData);
+
+      // If the server responds with a success message, log in the user and navigate to the home screen
+      if(response.message === 'Login successful') {
+      localStorage.setItem("UserToken", response.token);
+      setAlertMessage("User logged in successfully");
+      setShowAlert(true);
+      navigation.navigate("Home");
+      }
+      else{
+        setAlertMessage("User not found");
+        setShowAlert(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage(`Error logging in user: ${error.message}`);
+      setShowAlert(true);
+    }
+  }
+  else{
+    try {
+      // Send the user data to the server for verification
+      const response = await loginAdmin(userData);
+
+      // If the server responds with a success message, log in the user and navigate to the home screen
+      if(response.message === 'Login successful') {
+      localStorage.setItem('adminToken',response.token);
+      setAlertMessage("Admin logged in successfully");
+      setShowAlert(true);
+      navigation.navigate("AdminHome");
+      }
+      else{
+        setAlertMessage("Admin not found");
+        setShowAlert(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage(`Error logging in user: ${error.message}`);
+      setShowAlert(true);
+    }
+  }
+};
+
 
   return (
     <View style={styles.container}>
@@ -109,7 +103,7 @@ const SignIn = () => {
       <Button mode="outlined" className="mt-8 bg-purple-100 text-white " onPress={handleLogin}>
             Login
        </Button>
-      
+      <MessagePrompt visible={showAlert} message={alertMessage} onClose={closeAlert} /> 
     </View>
   );
 };
