@@ -29,3 +29,15 @@ export const getUserDetails = async (userId) => {
     const response = await axios.get(`${API_URL}/user/${userId}`);
     return response.data;
 };
+export const createEvent = async (formData) => {
+    const response = await axios.post(`${API_URL}/events/new`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+    return response.data;
+};
+export const createSubEvent = async (formData) => {
+    const response = await axios.post(`${API_URL}/activity/new`, formData);
+    return response.data;
+};
