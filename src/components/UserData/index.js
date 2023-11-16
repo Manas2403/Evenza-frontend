@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import HorizontalLine from "../Horizontal Line";
 import Icon from "react-native-vector-icons/AntDesign";
 
-const UserData = () => {
+const UserData = ({ userData }) => {
+    console.log(userData);
     const [visible, setVisible] = useState(false);
     const showDialog = () => setVisible(true);
     const hideDialog = () => setVisible(false);
@@ -20,23 +21,23 @@ const UserData = () => {
                     </View>
                     <View className="flex flex-row justify-between px-8 mt-4">
                         <Text className="text-gray-600 ">Name</Text>
-                        <Text className="text-gray-600 ">
-                            Vishesh Vijayvargiya
-                        </Text>
+                        <Text className="text-gray-600 ">{userData.name}</Text>
                     </View>
                     <View className="flex flex-row justify-between px-8 mt-4">
                         <Text className="text-gray-600 ">Email</Text>
-                        <Text className="text-gray-600 ">
-                            iit2021114@iiita.ac.in
-                        </Text>
+                        <Text className="text-gray-600 ">{userData.email}</Text>
                     </View>
                     <View className="flex flex-row justify-between px-8 mt-4">
                         <Text className="text-gray-600 ">Phone</Text>
-                        <Text className="text-gray-600 ">+91-9625388220</Text>
+                        <Text className="text-gray-600 ">
+                            {userData.phoneNumber}
+                        </Text>
                     </View>
                     <View className="flex flex-row justify-between px-8 mt-4">
                         <Text className="text-gray-600 ">Institution</Text>
-                        <Text className="text-gray-600 ">IIITA</Text>
+                        <Text className="text-gray-600 ">
+                            {userData.institute}
+                        </Text>
                     </View>
                 </View>
                 <HorizontalLine />
@@ -53,10 +54,6 @@ const UserData = () => {
                     <View className="flex flex-row justify-between px-8 mt-4">
                         <Text className="text-gray-600 ">Registered</Text>
                         <Text className="text-gray-600 ">6</Text>
-                    </View>
-                    <View className="flex flex-row justify-between px-8 mt-4">
-                        <Text className="text-gray-600 ">Next event in</Text>
-                        <Text className="text-gray-600 ">2 days</Text>
                     </View>
                 </View>
                 <HorizontalLine />

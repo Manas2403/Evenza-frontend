@@ -16,7 +16,7 @@ const EventCard = (props) => {
     return (
         <>
             <Card className="my-3" onPress={props.onClick}>
-                <Card.Cover source={props.img} />
+                <Card.Cover source={{ uri: props.img }} />
                 <View>
                     <Card.Title
                         title={props.title}
@@ -42,9 +42,15 @@ const EventCard = (props) => {
                 <Card.Actions className="flex-col justify-evenly pr-5 items-center my-2">
                     <Button
                         className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
-                        onPress={props.isRegister==true?showDialog:props.onClick}
+                        onPress={
+                            props.isRegister == true
+                                ? showDialog
+                                : props.onClick
+                        }
                     >
-                        {props.isRegister?"Register":"Approve Registrations"}
+                        {props.isRegister
+                            ? "Register"
+                            : "Approve Registrations"}
                     </Button>
                 </Card.Actions>
             </Card>

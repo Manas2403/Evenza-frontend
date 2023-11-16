@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import QR from "../../components/QR";
 import UserData from "../../components/UserData";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,19 +10,18 @@ const Profile = () => {
     const [userData, setUserData] = useState({});
     const [userId, setUserId] = useState("");
     async function fetchData() {
-        const userToken = await AsyncStorage.getItem("UserToken");
-        console.log(userToken);
-        const data = await getUserId(userToken);
-        console.log(data);
-        setUserId(data.id);
-        const userData = await getUserDetails(data.id);
-        setUserData(userData);
+        const userEmail = await AsyncStorage.getItem("email");
+        const data = await getUserDetails(userEmail);
+        setUserData(data.user);
     }
+    useEffect(() => {
+        fetchData();
+    }, []);
     return (
         <ScrollView>
             <View>
-                <QR />
-                <UserData />
+                <QR qr={userData.qr} />
+                <UserData userData={userData} />
             </View>
         </ScrollView>
     );

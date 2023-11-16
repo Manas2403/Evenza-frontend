@@ -34,6 +34,7 @@ const SignIn = ({ navigation }) => {
                 // If the server responds with a success message, log in the user and navigate to the home screen
                 if (response.message === "Login successful") {
                     await AsyncStorage.setItem("UserToken", response.token);
+                    await AsyncStorage.setItem("email", email);
                     setAlertMessage("User logged in successfully");
                     setShowAlert(true);
 
@@ -55,6 +56,7 @@ const SignIn = ({ navigation }) => {
                 // If the server responds with a success message, log in the user and navigate to the home screen
                 if (response.message === "Login successful") {
                     await AsyncStorage.setItem("UserToken", response.token);
+                    await AsyncStorage.setItem("email", email);
                     setAlertMessage("Admin logged in successfully");
                     setShowAlert(true);
                     navigation.navigate("AdminHome");
