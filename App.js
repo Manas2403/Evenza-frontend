@@ -20,6 +20,7 @@ import AdminProfile from "./src/screens/AdminProfile";
 import RegisterUser from "./src/screens/RegisterUser";
 import SignIn from "./src/screens/SignIn";
 import ApproveRegistration from "./src/screens/ApproveRegistration";
+import CreateSubEvent from "./src/screens/CreateSubevent";
 const Stack = createNativeStackNavigator();
 export default function App() {
     let [firstScreen, setFirstScreen] = useState("Register");
@@ -58,6 +59,7 @@ export default function App() {
             <Stack.Screen name="AdminProfile" component={AdminProfile} />
             <Stack.Screen name="ApproveRegistration" component={ApproveRegistration} />
             <Stack.Screen name="SignIn" component={SignIn} />
+            <Stack.Screen name="Create Subevent" component={CreateSubEvent} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

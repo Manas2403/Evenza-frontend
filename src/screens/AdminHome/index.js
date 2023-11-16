@@ -2,7 +2,7 @@ import { View, Text, ScrollView } from "react-native";
 import { useState, useEffect } from "react";
 import * as React from "react";
 import { Searchbar, Button } from "react-native-paper";
-import EventCard from "../../components/EventCard";
+import AdminEventCard from "../../components/AdminEventCard";
 import ApprovalCard from "../../components/ApprovalCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAllEvents } from "../../utils/Api";
@@ -66,7 +66,8 @@ const AdminHome = ({ navigation }) => {
       <View className="px-4">
         {events &&
           events.map((event) => (
-            <EventCard
+            <AdminEventCard
+              id={event._id}
               title={event.title}
               date={event.startDate}
               venue={event.location}
@@ -74,8 +75,9 @@ const AdminHome = ({ navigation }) => {
               registered={true}
               registerationCount={event.capacity}
               onClick={() => {
-                navigation.navigate("ApproveRegistration");
+                navigation.navigate("EventDetails");
               }}
+              navigate={navigation.navigate}
               isRegister={false}
             />
           ))}
