@@ -70,6 +70,14 @@ export default function App() {
                         name="ApproveRegistration"
                         component={ApproveRegistration}
                     />
+                    <Stack.Screen
+                        name="RequestManagement"
+                        component={RequestManagement}
+                    />
+                    <Stack.Screen
+                        name="CreateSubevent"
+                        component={CreateSubEvent}
+                    />
                     <Stack.Screen name="SignIn" component={SignIn} />
                 </Stack.Navigator>
             </NavigationContainer>

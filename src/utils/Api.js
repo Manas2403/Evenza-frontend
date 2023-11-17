@@ -41,3 +41,7 @@ export const createSubEvent = async (formData) => {
     const response = await axios.post(`${API_URL}/activity/new`, formData);
     return response.data;
 };
+export const getEvent = async (eventId) => {
+    const response = await axios.get(`${API_URL}/events/${eventId}`);
+    return response.data;
+};
