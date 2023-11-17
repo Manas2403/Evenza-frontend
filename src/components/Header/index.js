@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { Appbar } from "react-native-paper";
 import { goBack } from "../../utils/NavigationRef.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRoute } from "@react-navigation/native";
 const Header = ({ back, route, navigation }) => {
+  const r=useRoute();
     return (
       <Appbar.Header
         dark={true}
@@ -9,7 +12,9 @@ const Header = ({ back, route, navigation }) => {
         statusBarHeight={0}
         style={{ backgroundColor: "#4f378b" }}
       >
-        {back && (
+        {back && (AsyncStorage.getItem(
+          "UserToken"
+        ) !== null && r.name!=="Home" && r.name!=="AdminHome") && (
           <Appbar.BackAction
             color="#ffffff"
             onPress={() => {
@@ -32,7 +37,7 @@ const Header = ({ back, route, navigation }) => {
             icon="account"
             color="#ffffff"
             onPress={() => {
-              navigation.navigate("AdminProfile");
+              navigation.navigate("Profile");
             }}
           />
         )}

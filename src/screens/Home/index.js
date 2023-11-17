@@ -6,7 +6,7 @@ import EventCard from "../../components/EventCard";
 import ApprovalCard from "../../components/ApprovalCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAllEvents } from "../../utils/Api";
-
+import { BackHandler } from "react-native";
 const SearchBar = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const onChangeSearch = (query) => setSearchQuery(query);
@@ -22,6 +22,7 @@ const SearchBar = () => {
 };
 
 const Home = ({ navigation }) => {
+    
     const [events, setEvents] = useState(null);
     const getEvents = async () => {
         const events = await getAllEvents();
@@ -31,6 +32,7 @@ const Home = ({ navigation }) => {
     useEffect(() => {
         getEvents();
     }, []);
+    
     return (
         <ScrollView>
             <View className="p-4">
