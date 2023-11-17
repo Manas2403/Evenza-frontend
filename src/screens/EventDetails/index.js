@@ -6,10 +6,11 @@ import Icon from "react-native-vector-icons/EvilIcons";
 // import { Document, Page } from "@react-pdf/renderer";
 import { BlobUtil, RNFetchBlob } from "react-native-blob-util";
 import DownloadPdf from "../../components/DownloadPdf";
-import * as Print from 'expo-print';
-import { shareAsync } from 'expo-sharing';
-
-export default function EventDetails({ navigation }) {
+import * as Print from "expo-print";
+import { shareAsync } from "expo-sharing";
+import { getEvent } from "../../utils/Api";
+export default function EventDetails({ route, navigation }) {
+    const { id } = route.params;
     const DATA = [
         {
             id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
@@ -49,10 +50,9 @@ export default function EventDetails({ navigation }) {
     const printToFile = async () => {
         // On iOS/android prints the given html. On web prints the HTML from the current page.
         const { uri } = await Print.printToFileAsync({ html });
-        console.log('File has been saved to:', uri);
-        await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
-      };
-
+        console.log("File has been saved to:", uri);
+        await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
+    };
 
     return (
         <>
@@ -111,7 +111,10 @@ export default function EventDetails({ navigation }) {
                         <Button className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 ">
                             Register
                         </Button>
-                        <Button className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 " onPress={printToFile}>
+                        <Button
+                            className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
+                            onPress={printToFile}
+                        >
                             Download ID-Card
                         </Button>
                         <Button

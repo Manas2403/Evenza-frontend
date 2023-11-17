@@ -89,7 +89,7 @@ const RegisterUser = ({ navigation }) => {
                 className="bg-purple-50 " // Added the style property here
                 onPress={handleSignUp} // Removed the extra arrow function
             >
-                Create
+                Register
             </Button>
             <MessagePrompt
                 visible={showAlert}

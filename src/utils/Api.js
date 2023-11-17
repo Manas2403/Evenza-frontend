@@ -8,38 +8,40 @@ export const getAllEvents = async () => {
 export const registerUser = async (data) => {
     const response = await axios.post(`${API_URL}/user/register`, data);
     return response.data;
-}
+};
 export const loginUser = async (data) => {
     const response = await axios.post(`${API_URL}/user/login`, data);
     return response.data;
-}
-
-export const getUserId= async (token) => {
-    const response = await axios.get(`${API_URL}/user`,{headers: {
-        'Authorization': `Bearer ${token}` 
-      }});
+};
+export const loginAdmin = async (data) => {
+    const response = await axios.post(`${API_URL}/admin/login`, data);
     return response.data;
-}
-export const getUserDetails = async(id)=>{
-    const response = await axios.get(`${API_URL}/user/${id}`);
+};
+export const getUserId = async (token) => {
+    const response = await axios.get(`${API_URL}/user`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
     return response.data;
-}
+};
+export const getUserDetails = async (userId) => {
+    const response = await axios.get(`${API_URL}/user/${userId}`);
+    return response.data;
+};
 export const createEvent = async (formData) => {
-   const response = await axios.post(
-     `${API_URL}/events/new`,
-     formData,
-     {
-       headers: {
-         "Content-Type": "multipart/form-data",
-       },
-     }
-   );
+    const response = await axios.post(`${API_URL}/events/new`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
     return response.data;
-}
+};
 export const createSubEvent = async (formData) => {
-    const response = await axios.post(
-      `${API_URL}/activity/new`,
-      formData      
-    );
-     return response.data;
- }
+    const response = await axios.post(`${API_URL}/activity/new`, formData);
+    return response.data;
+};
+export const getEvent = async (eventId) => {
+    const response = await axios.get(`${API_URL}/events/${eventId}`);
+    return response.data;
+};

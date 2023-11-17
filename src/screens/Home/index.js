@@ -39,7 +39,6 @@ const Home = ({ navigation }) => {
                 <SearchBar />
             </View>
             <View className="flex flex-row gap-x-2 items-center justify-center">
-               
                 <Button
                     className="w-1/3 font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
                     onPress={() => {
@@ -53,14 +52,17 @@ const Home = ({ navigation }) => {
                 {events &&
                     events.map((event) => (
                         <EventCard
+                            key={event._id}
                             title={event.title}
                             date={event.startDate}
                             venue={event.location}
-                            img={{ uri: event.image }}
+                            img={event.url}
                             registered={true}
                             registerationCount={event.capacity}
                             onClick={() => {
-                                navigation.navigate("EventDetails");
+                                navigation.navigate("EventDetails", {
+                                    id: event._id,
+                                });
                             }}
                             isRegister={true}
                         />

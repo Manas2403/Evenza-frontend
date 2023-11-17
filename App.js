@@ -34,40 +34,59 @@ export default function App() {
         startUp();
     });
     return (
-      <PaperProvider>
-        <StatusBar backgroundColor={"#4f378b"} barStyle="default" />
-        <NavigationContainer ref={navigationRef}>
-          <Stack.Navigator
-            initialRouteName={firstScreen}
-            screenOptions={{
-              header: (props) => <Header {...props} />,
-            }}
-          >
-            <Stack.Screen
-              name="Register"
-              component={Register}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="CreateEvent"
-              component={CreateEvent}
-              //   options={{ headerShown: false }}
-            />
-            <Stack.Screen name="QRScanner" component={QRScanner} />
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="EventDetails" component={EventDetails} />
-            <Stack.Screen name="AdminHome" component={AdminHome} />
-            <Stack.Screen name="YourEvents" component={YourEvents} />
-            <Stack.Screen name="AdminEvents" component={AdminEvents} />
-            <Stack.Screen name="RegisterUser" component={RegisterUser} />
-            <Stack.Screen name="AdminProfile" component={AdminProfile} />
-            <Stack.Screen name="ApproveRegistration" component={ApproveRegistration} />
-            <Stack.Screen name="SignIn" component={SignIn} />
-            <Stack.Screen name="Create Subevent" component={CreateSubEvent} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
+        <PaperProvider>
+            <StatusBar backgroundColor={"#4f378b"} barStyle="default" />
+            <NavigationContainer ref={navigationRef}>
+                <Stack.Navigator
+                    initialRouteName={firstScreen}
+                    screenOptions={{
+                        header: (props) => <Header {...props} />,
+                    }}
+                >
+                    <Stack.Screen
+                        name="Register"
+                        component={Register}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="CreateEvent"
+                        component={CreateEvent}
+                        //   options={{ headerShown: false }}
+                    />
+                    <Stack.Screen name="QRScanner" component={QRScanner} />
+                    <Stack.Screen name="Home" component={Home} />
+                    <Stack.Screen name="Profile" component={Profile} />
+                    <Stack.Screen
+                        name="EventDetails"
+                        component={EventDetails}
+                    />
+                    <Stack.Screen name="AdminHome" component={AdminHome} />
+                    <Stack.Screen name="YourEvents" component={YourEvents} />
+                    <Stack.Screen name="AdminEvents" component={AdminEvents} />
+                    <Stack.Screen
+                        name="RegisterUser"
+                        component={RegisterUser}
+                    />
+                    <Stack.Screen
+                        name="AdminProfile"
+                        component={AdminProfile}
+                    />
+                    <Stack.Screen
+                        name="ApproveRegistration"
+                        component={ApproveRegistration}
+                    />
+                    <Stack.Screen
+                        name="RequestManagement"
+                        component={RequestManagement}
+                    />
+                    <Stack.Screen
+                        name="CreateSubevent"
+                        component={CreateSubEvent}
+                    />
+                    <Stack.Screen name="SignIn" component={SignIn} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </PaperProvider>
     );
 }
 //   Google Certificate Fingerprint:     53:04:CC:AE:FD:FC:23:6C:8A:EC:67:5D:17:83:88:F7:18:36:43:4F
