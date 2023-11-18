@@ -3,6 +3,7 @@ import { View, Image } from "react-native";
 import { Avatar, Button, Card, Text, Portal, Dialog } from "react-native-paper";
 import Icon from "react-native-vector-icons/EvilIcons";
 import moment from "moment";
+import { eventRegister } from "../../utils/Api";
 const EventCard = (props) => {
     const [visible, setVisible] = useState(false);
     const showDialog = () => setVisible(true);
@@ -13,6 +14,12 @@ const EventCard = (props) => {
     const utcMoment = moment(props.date);
     const istMoment = utcMoment.add(5, "hours").add(30, "minutes");
     const istTimeString = istMoment.format("YYYY-MM-DD");
+    const EventRegister=async()=>{
+        const userId=props.user
+        const eventId=props.key
+        const response=await eventRegister(eventId,userId)
+        console.log(response)
+    }
     return (
         <>
             <Card className="my-3" onPress={props.onClick}>

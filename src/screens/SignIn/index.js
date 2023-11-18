@@ -35,7 +35,7 @@ const SignIn = ({ navigation }) => {
                 // If the server responds with a success message, log in the user and navigate to the home screen
                 if (response.message === "Login successful") {
                     await AsyncStorage.setItem("UserToken", response.token)
-                    await AsyncStorage.setItem("email", email);
+                    await AsyncStorage.setItem("email",response.email);
                     setAlertMessage("User logged in successfully");
                     setShowAlert(true);
                     if(selectedRole==="Admin"){

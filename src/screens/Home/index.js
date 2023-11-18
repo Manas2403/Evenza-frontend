@@ -33,16 +33,19 @@ const Home = ({ navigation }) => {
         setEvents(events.events);
     };
     const [user, setUser] = useState(null);
-    useEffect(() => {
-        getEvents();
-        getUserDetails();
-    }, []);
-   const getUserDetails = async () => {
+    
+   const getUserDetail = async () => {
      const token = await AsyncStorage.getItem("email");
      const user = await getUserDetails(token);
+     console.log(token)
      console.log(user);
+     console.log(user.user._id)
      setUser(user);
-   }; 
+   };
+   useEffect(() => {
+     getEvents();
+     getUserDetail();
+   }, []); 
     return (
         <ScrollView>
             <View className="p-4">
@@ -59,14 +62,14 @@ const Home = ({ navigation }) => {
                 </Button>
             </View>
             <View className="px-4">
-                {events   &&
+                {events && user &&
                     events.map((event) => (
                         <EventCard
                             key={event._id}
                             title={event.title}
                             date={event.startDate}
                             venue={event.location}
-                            
+                            user={user.user._id} 
                             img={event.url}
                             registered={true}
                             registerationCount={event.capacity}
