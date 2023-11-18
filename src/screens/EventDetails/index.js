@@ -1,5 +1,5 @@
 import { View, ScrollView, FlatList, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Divider, Text, Button } from "react-native-paper";
 import Icon from "react-native-vector-icons/EvilIcons";
@@ -9,15 +9,24 @@ import { BlobUtil, RNFetchBlob } from "react-native-blob-util";
 import DownloadPdf from "../../components/DownloadPdf";
 import * as Print from "expo-print";
 import { shareAsync } from "expo-sharing";
-import { getEvent } from "../../utils/Api";
+import { getEvent, getUserDetails } from "../../utils/Api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import QRCode from "react-native-qrcode-svg";
 export default function EventDetails({ route, navigation }) {
-    const { id } = route.params;
+    const viewRef = useRef(null);
+    const { id, userId } = route.params;
     const [event, setEvent] = useState(null);
     const [activities, setActivities] = useState(null);
+    const [user, setUser] = useState(null);
     async function getEventDetails() {
         const { event, activities } = await getEvent(id);
         setEvent(event);
         setActivities(activities);
+    }
+    async function getUserDetail() {
+        const token = await AsyncStorage.getItem("email");
+        const user = await getUserDetails(token);
+        setUser(user.user);
     }
     const DATA = [
         {
@@ -27,6 +36,7 @@ export default function EventDetails({ route, navigation }) {
     ];
     useEffect(() => {
         getEventDetails();
+        getUserDetail();
     }, []);
     const backendEndDate = event?.startDate;
 
@@ -41,19 +51,28 @@ export default function EventDetails({ route, navigation }) {
             <Text>{`\u25CF ${title}`}</Text>
         </View>
     );
-
+    const qrCodeToSvgString = async (data, size) => {
+        const svgString = await new QRCode({
+            value: data ? data : "NA",
+            size: size || 100,
+            color: "black",
+            backgroundColor: "white",
+        }).toSVGString();
+        return svgString;
+    };
     const html = `
     <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     </head>
     <body style="text-align: center;">
-        <h1 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
-        Hello Expo!
-        </h1>
-        <img
-        src="https://d30j33t1r58ioz.cloudfront.net/static/guides/sdk.png"
-        style="width: 90vw;" />
+      ${qrCodeToSvgString(user?.qr, 200)}
+        <h2 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
+        ${user?.name}
+        </h2>
+        <h2 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
+        ${user?.email}
+        </h2>    
     </body>
     </html>
     `;

@@ -56,7 +56,9 @@ const UserData = ({ userData }) => {
 
                     <View className="flex flex-row justify-between px-8 mt-4">
                         <Text className="text-gray-600 ">Registered</Text>
-                        <Text className="text-gray-600 ">6</Text>
+                        <Text className="text-gray-600 ">
+                            {userData?.registered?.length}
+                        </Text>
                     </View>
                 </View>
                 <HorizontalLine />

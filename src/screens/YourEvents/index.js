@@ -1,16 +1,17 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React from "react";
-import { getAllEvents } from "../../utils/Api";
+import { getAllEvents, getUserDetails } from "../../utils/Api";
 import { useState, useEffect } from "react";
 import { Button } from "react-native-paper";
 import EventCard from "../../components/EventCard";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const YourEvents = ({ navigation }) => {
     const [events, setEvents] = useState(null);
     const getEvents = async () => {
-        const events = await getAllEvents();
-        console.log(events.events);
-        setEvents(events.events);
+        const userEmail = await AsyncStorage.getItem("email");
+        const user = await getUserDetails(userEmail);
+        console.log(user.user.registered);
+        setEvents(user.user.registered);
     };
     useEffect(() => {
         getEvents();
@@ -19,8 +20,9 @@ const YourEvents = ({ navigation }) => {
         <ScrollView>
             <View className="px-4">
                 {events &&
-                    events.map((event) => (
+                    events.map((event, i) => (
                         <EventCard
+                            key={i}
                             title={event.title}
                             date={event.startDate}
                             venue={event.location}

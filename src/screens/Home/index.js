@@ -11,7 +11,6 @@ import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserDetails } from "../../utils/Api";
 const SearchBar = () => {
-
     const [searchQuery, setSearchQuery] = useState("");
     const onChangeSearch = (query) => setSearchQuery(query);
     return (
@@ -25,7 +24,6 @@ const SearchBar = () => {
 };
 
 const Home = ({ navigation }) => {
-    
     const [events, setEvents] = useState(null);
     const getEvents = async () => {
         const events = await getAllEvents();
@@ -33,19 +31,19 @@ const Home = ({ navigation }) => {
         setEvents(events.events);
     };
     const [user, setUser] = useState(null);
-    
-   const getUserDetail = async () => {
-     const token = await AsyncStorage.getItem("email");
-     const user = await getUserDetails(token);
-     console.log(token)
-     console.log(user);
-     console.log(user.user._id)
-     setUser(user);
-   };
-   useEffect(() => {
-     getEvents();
-     getUserDetail();
-   }, []); 
+
+    const getUserDetail = async () => {
+        const token = await AsyncStorage.getItem("email");
+        const user = await getUserDetails(token);
+        console.log(token);
+        console.log(user);
+        console.log(user.user._id);
+        setUser(user);
+    };
+    useEffect(() => {
+        getEvents();
+        getUserDetail();
+    }, []);
     return (
         <ScrollView>
             <View className="p-4">
@@ -62,20 +60,22 @@ const Home = ({ navigation }) => {
                 </Button>
             </View>
             <View className="px-4">
-                {events && user &&
+                {events &&
+                    user &&
                     events.map((event) => (
                         <EventCard
                             key={event._id}
                             title={event.title}
                             date={event.startDate}
                             venue={event.location}
-                            user={user.user._id} 
+                            user={user.user._id}
                             img={event.url}
                             registered={true}
                             registerationCount={event.capacity}
                             onClick={() => {
                                 navigation.navigate("EventDetails", {
                                     id: event._id,
+                                    userId: user.user._id,
                                 });
                             }}
                             isRegister={true}

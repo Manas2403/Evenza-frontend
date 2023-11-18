@@ -19,9 +19,11 @@ export const loginAdmin = async (data) => {
 };
 
 export const getUserDetails = async (userId) => {
+    console.log(userId);
     const response = await axios.get(`${API_URL}/user/${userId}`);
     return response.data;
 };
+
 export const createEvent = async (formData) => {
     const response = await axios.post(`${API_URL}/events/new`, formData, {
         headers: {
@@ -46,4 +48,4 @@ export const eventRegister = async (eventId, userId) => {
         userId,
     });
     return response.data;
-}
+};
