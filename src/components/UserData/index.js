@@ -89,7 +89,6 @@ const UserData = ({ userData }) => {
               <Text className="text-gray-600 ">Institution</Text>
               <Text className="text-gray-600 ">IIITA</Text>
             </View>
-          </View>
           <HorizontalLine />
           <View>
             <View className="flex flex-row justify-between px-6 mt-4">
@@ -122,7 +121,6 @@ const UserData = ({ userData }) => {
               </View>
             </View>
           </View>
-        </View>
         <Portal>
           <Dialog visible={visible} onDismiss={hideDialog}>
             <Dialog.Title>Confirm</Dialog.Title>

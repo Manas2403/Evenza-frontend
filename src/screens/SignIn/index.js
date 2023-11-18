@@ -69,6 +69,7 @@ const SignIn = ({ navigation }) => {
                 <TextInput
                     style={styles.passwordInput}
                     placeholder="Password"
+                    mode="outlined"
                     onChangeText={(text) => setPassword(text)}
                     secureTextEntry={!showPassword}
                 />
@@ -135,6 +136,15 @@ const styles = StyleSheet.create({
     radioOption: {
         flexDirection: "row",
         alignItems: "center",
+        marginRight: 16,
+    },
+    passwordInputContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        height: 40,
+    },
+    passwordInput: {
+        flex: 1,
         marginRight: 16,
     },
 });
