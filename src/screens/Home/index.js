@@ -7,10 +7,13 @@ import ApprovalCard from "../../components/ApprovalCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAllEvents } from "../../utils/Api";
 import { BackHandler } from "react-native";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUserDetails } from "../../utils/Api";
 const SearchBar = () => {
+
     const [searchQuery, setSearchQuery] = useState("");
     const onChangeSearch = (query) => setSearchQuery(query);
-
     return (
         <Searchbar
             placeholder="Search for conferences"
@@ -29,10 +32,17 @@ const Home = ({ navigation }) => {
         console.log(events.events);
         setEvents(events.events);
     };
+    const [user, setUser] = useState(null);
     useEffect(() => {
         getEvents();
+        getUserDetails();
     }, []);
-    
+   const getUserDetails = async () => {
+     const token = await AsyncStorage.getItem("email");
+     const user = await getUserDetails(token);
+     console.log(user);
+     setUser(user);
+   }; 
     return (
         <ScrollView>
             <View className="p-4">
@@ -49,13 +59,14 @@ const Home = ({ navigation }) => {
                 </Button>
             </View>
             <View className="px-4">
-                {events &&
+                {events   &&
                     events.map((event) => (
                         <EventCard
                             key={event._id}
                             title={event.title}
                             date={event.startDate}
                             venue={event.location}
+                            
                             img={event.url}
                             registered={true}
                             registerationCount={event.capacity}
