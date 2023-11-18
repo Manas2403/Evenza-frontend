@@ -43,5 +43,7 @@ export const createSubEvent = async (formData) => {
 };
 export const getEvent = async (eventId) => {
     const response = await axios.get(`${API_URL}/events/${eventId}`);
+
+    console.log(response.data);
     return response.data;
 };

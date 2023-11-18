@@ -1,8 +1,9 @@
 import { View, ScrollView, FlatList, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Divider, Text, Button } from "react-native-paper";
 import Icon from "react-native-vector-icons/EvilIcons";
+import moment from "moment";
 // import { Document, Page } from "@react-pdf/renderer";
 import { BlobUtil, RNFetchBlob } from "react-native-blob-util";
 import DownloadPdf from "../../components/DownloadPdf";
@@ -11,20 +12,30 @@ import { shareAsync } from "expo-sharing";
 import { getEvent } from "../../utils/Api";
 export default function EventDetails({ route, navigation }) {
     const { id } = route.params;
+    const [event, setEvent] = useState(null);
+    const [activities, setActivities] = useState(null);
+    async function getEventDetails() {
+        const { event, activities } = await getEvent(id);
+        setEvent(event);
+        setActivities(activities);
+    }
     const DATA = [
         {
             id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-            title: "Visit the Acropolic and spend time with the locals",
-        },
-        {
-            id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-            title: "Take pictures with the locals and enjoy the food",
-        },
-        {
-            id: "58694a0f-3da1-471f-bd96-145571e29d72",
-            title: "Begin your venture into the city of Athens",
+            title: "ID Card",
         },
     ];
+    useEffect(() => {
+        getEventDetails();
+    }, []);
+    const backendEndDate = event?.startDate;
+
+    // Parse the string using the Date object
+    const parsedDate = new Date(backendEndDate);
+
+    // Format the date using moment
+    const formattedDate = moment(parsedDate).format("MMMM Do YYYY");
+
     const Item = ({ title }) => (
         <View className="mb-2">
             <Text>{`\u25CF ${title}`}</Text>
@@ -60,35 +71,21 @@ export default function EventDetails({ route, navigation }) {
                 <View className="p-4 flex flex-col gap-4">
                     <View className="flex flex-col">
                         <Text variant="titleLarge" className="mb-2">
-                            IEEE Conference
+                            {event?.title}
                         </Text>
                         <View className="flex flex-row justify-between items-center">
                             <View className="flex-row justify-between items-center">
                                 <Icon name="calendar" size={16} />
                                 <Text variant="titleSmall" className="ml-1">
-                                    3rd-6th Oct
+                                    {formattedDate}
                                 </Text>
                             </View>
-                            <Text variant="titleSmall">
-                                1200+ registerations
-                            </Text>
+                            <Text>{event?.capacity} Registerations</Text>
                         </View>
                     </View>
                     <Divider />
                     <View>
-                        <Text variant="bodySmall">
-                            The IEEE International Conference on Advanced
-                            Technologies is a premier global gathering that
-                            brings together leading researchers, innovators,
-                            engineers, and professionals from various fields to
-                            explore, discuss, and advance the latest
-                            advancements in technology and engineering.
-                            Organized annually by the Institute of Electrical
-                            and Electronics Engineers (IEEE), this conference
-                            serves as a focal point for sharing knowledge,
-                            fostering collaboration, and shaping the future of
-                            technology.
-                        </Text>
+                        <Text variant="bodySmall">{event?.description}</Text>
                     </View>
                     <Divider />
                     <View className="flex flex-col">
@@ -96,9 +93,11 @@ export default function EventDetails({ route, navigation }) {
                             Inclusions
                         </Text>
                         <FlatList
-                            data={DATA}
+                            data={activities}
                             renderItem={({ item }) => (
-                                <Item title={item.title} />
+                                <View>
+                                    <Item title={item.title} />
+                                </View>
                             )}
                             keyExtractor={(item) => item.id}
                         />
@@ -106,6 +105,7 @@ export default function EventDetails({ route, navigation }) {
                     <Divider />
                     <View>
                         <Text variant="titleLarge">Where ?</Text>
+                        <Text variant="bodySmall">{event?.location}</Text>
                     </View>
                     <View className="flex flex-col gap-y-2  justify-center items-center">
                         <Button className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 ">

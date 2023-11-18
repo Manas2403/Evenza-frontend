@@ -68,7 +68,7 @@ const Register = ({ navigation }) => {
                 </View>
                 <View className="p-2">
                     <Text className="text-2xl font-bold text-purple-900 text-center  font-sans px-6">
-                        India's #1 Conference Management App
+                        Conference Management App
                     </Text>
                 </View>
                 <View className="p-8 mt-8 w-4/5">
@@ -81,15 +81,23 @@ const Register = ({ navigation }) => {
                     >
                         <Text>Sign In</Text>
                     </Button> */}
-                    <Button mode="outlined" className="mt-4 rounded-lg bg-purple-50" onPress={()=>{
-                       return navigation.navigate("SignIn") 
-                    }}>
+                    <Button
+                        mode="outlined"
+                        className="mt-4 rounded-lg bg-purple-50"
+                        onPress={() => {
+                            return navigation.navigate("SignIn");
+                        }}
+                    >
                         Sign In
                     </Button>
-                    <Button mode="outlined" className="mt-4 rounded-lg bg-purple-50" onPress={()=>{
-                       return navigation.navigate("RegisterUser") 
-                    //    return navigation.navigate("AdminHome") 
-                    }}>
+                    <Button
+                        mode="outlined"
+                        className="mt-4 rounded-lg bg-purple-50"
+                        onPress={() => {
+                            return navigation.navigate("RegisterUser");
+                            //    return navigation.navigate("AdminHome")
+                        }}
+                    >
                         Sign Up
                     </Button>
                 </View>
