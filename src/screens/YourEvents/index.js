@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React from "react";
 import { getAllEvents } from "../../utils/Api";
 import { useState, useEffect } from "react";
@@ -16,7 +16,7 @@ const YourEvents = ({ navigation }) => {
         getEvents();
     }, []);
     return (
-        <View>
+        <ScrollView>
             <View className="px-4">
                 {events &&
                     events.map((event) => (
@@ -35,7 +35,7 @@ const YourEvents = ({ navigation }) => {
                         />
                     ))}
             </View>
-        </View>
+        </ScrollView>
     );
 };
 

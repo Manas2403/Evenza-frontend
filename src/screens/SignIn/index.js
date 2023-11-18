@@ -29,31 +29,29 @@ const SignIn = ({ navigation }) => {
             email,
             password,
         };
-         try {
-                // Send the user data to the server for verification
-                const response = await loginUser(userData);
-                console.log(response);
-                // If the server responds with a success message, log in the user and navigate to the home screen
-                if (response.message === "Login successful") {
-                    await AsyncStorage.setItem("UserToken", response.token);
-                    setAlertMessage("User logged in successfully");
-                    setShowAlert(true);
-                    if(selectedRole==="Admin"){
-                        navigation.navigate("AdminHome");
-                    }
-                    else{
-                        navigation.navigate("Home");
-                    }
-                    
+        try {
+            // Send the user data to the server for verification
+            const response = await loginUser(userData);
+            console.log(response);
+            // If the server responds with a success message, log in the user and navigate to the home screen
+            if (response.message === "Login successful") {
+                await AsyncStorage.setItem("UserToken", response.token);
+                setAlertMessage("User logged in successfully");
+                setShowAlert(true);
+                if (selectedRole === "Admin") {
+                    navigation.navigate("AdminHome");
                 } else {
-                    setAlertMessage("User not found");
-                    setShowAlert(true);
+                    navigation.navigate("Home");
                 }
-            } catch (error) {
-                console.log(error);
-                setAlertMessage(`Error logging in user: ${error.message}`);
+            } else {
+                setAlertMessage("User not found");
                 setShowAlert(true);
             }
+        } catch (error) {
+            console.log(error);
+            setAlertMessage(`Error logging in user: ${error.message}`);
+            setShowAlert(true);
+        }
     };
 
     return (
