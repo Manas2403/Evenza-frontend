@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const CreateEvent = () => {
+const CreateEvent = ({route}) => {
+  const adminMail = route.params.email
   const [eventData, setEventData] = useState({
     title: "",
     description: "",
@@ -73,7 +74,7 @@ console.log(eventData)
          });
        }
 
-       const response = await createEvent(formData);
+       const response = await createEvent(formData,adminMail);
 
        console.log("Event created successfully:", response.data);
      } catch (error) {

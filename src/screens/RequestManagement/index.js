@@ -1,13 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import ApprovalCard from "../../components/ApprovalCard";
-export default function RequestManagement({ navigation }) {
+import { getApprovals } from "../../utils/Api";
+export default function RequestManagement({ navigation, route }) {
+    const [approvals, setApprovals] = useState(null)
+    const getApproval = async () => {
+        const eventId=route.params.id;
+        const approvals = await getApprovals(eventId);
+        setApprovals(approvals);
+        console.log(approvals)
+    };
+    useEffect(() => {
+        getApproval();
+    }, []);
     return (
         <>
             <ScrollView>
                 <View className="p-4 flex flex-col ">
-                    <ApprovalCard />
-                    <ApprovalCard />
+                    
+                    <View className="flex flex-col gap-4">
+                        {approvals?.map((approval) => (
+                            <ApprovalCard
+                                key={approval._id}
+                                name={approval.event}
+                                event={approval.event}
+                                user={approval.user}
+                            />
+                        ))}
+                    </View>
                 </View>
             </ScrollView>
         </>

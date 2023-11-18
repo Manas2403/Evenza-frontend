@@ -24,6 +24,7 @@ import CreateSubEvent from "./src/screens/CreateSubevent";
 import { BackHandler } from "react-native";
 import { useNavigation } from "@react-navigation/native"
 import { useRoute } from "@react-navigation/native";
+// import RequestManagement from "./src/screens/RequestManagement";
 const Stack = createNativeStackNavigator();
 export default function App() {
 
@@ -53,6 +54,7 @@ export default function App() {
                         component={CreateEvent}
                         //   options={{ headerShown: false }}
                     />
+                    {/* <Stack.Screen name="RequestManagement" component={RequestManagement} /> */}
                     <Stack.Screen name="QRScanner" component={QRScanner} />
                     <Stack.Screen name="Home" component={Home} />
                     <Stack.Screen name="Profile" component={Profile} />

@@ -69,6 +69,7 @@ const Home = ({ navigation }) => {
                             date={event.startDate}
                             venue={event.location}
                             user={user.user._id}
+                            event={event._id}
                             img={event.url}
                             registered={true}
                             registerationCount={event.capacity}
