@@ -8,8 +8,8 @@ const QR = ({ qr }) => {
             <QRCode
                 value={qr ? qr : "NA"}
                 size={200}
-                color="white"
-                backgroundColor="black"
+                color="black"
+                backgroundColor="white"
             ></QRCode>
         </View>
     );
