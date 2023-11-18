@@ -8,18 +8,15 @@ const EventCard = (props) => {
     const [visible, setVisible] = useState(false);
     const showDialog = () => setVisible(true);
     const hideDialog = () => setVisible(false);
-    const handleRegisteration = () => {
-        hideDialog();
-    };
-    const utcMoment = moment(props.date);
-    const istMoment = utcMoment.add(5, "hours").add(30, "minutes");
-    const istTimeString = istMoment.format("YYYY-MM-DD");
-    const EventRegister=async()=>{
-        const userId=props.user
-        const eventId=props.key
+    const handleRegisteration =async(userId,eventId)=>{ 
+        console.log(userId,eventId)
         const response=await eventRegister(eventId,userId)
         console.log(response)
     }
+    const utcMoment = moment(props.date);
+    const istMoment = utcMoment.add(5, "hours").add(30, "minutes");
+    const istTimeString = istMoment.format("YYYY-MM-DD");
+    
     return (
         <>
             <Card className="my-3" onPress={props.onClick}>
@@ -71,7 +68,7 @@ const EventCard = (props) => {
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={hideDialog}>Cancel</Button>
-                        <Button onPress={handleRegisteration}>Confirm</Button>
+                        <Button onPress={()=>handleRegisteration(props.user,props.event)}>Confirm</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

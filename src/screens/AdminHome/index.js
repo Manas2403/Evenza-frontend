@@ -5,8 +5,9 @@ import { Searchbar, Button } from "react-native-paper";
 import AdminEventCard from "../../components/AdminEventCard";
 import ApprovalCard from "../../components/ApprovalCard";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getAllEvents } from "../../utils/Api";
+import { getAllEvents, getUserDetails } from "../../utils/Api";
 import QRScanner from "../../components/QRScanner";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SearchBar = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -25,13 +26,15 @@ const SearchBar = () => {
 const AdminHome = ({ navigation }) => {
     const [events, setEvents] = useState(null);
     const getEvents = async () => {
-        const events = await getAllEvents();
-        console.log(events.events);
-        setEvents(events.events);
+        const event = await getAllEvents();
+        console.log(event.events);
+        setEvents(event.events);
     };
+    const email=AsyncStorage.getItem("email")
     useEffect(() => {
-        getEvents();
+        getEvents()
     }, []);
+    console.log(events)
     return (
         <ScrollView>
             <View className="p-4">
@@ -41,7 +44,7 @@ const AdminHome = ({ navigation }) => {
                 <Button
                     className="font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
                     onPress={() => {
-                        navigation.navigate("CreateEvent");
+                        navigation.navigate("CreateEvent",{email:email});
                     }}
                 >
                     Create Event
@@ -75,7 +78,7 @@ const AdminHome = ({ navigation }) => {
                             registered={true}
                             registerationCount={event.capacity}
                             onClick={() => {
-                                navigation.navigate("EventDetails");
+                                navigation.navigate("EventDetails",{id:event._id});
                             }}
                             navigate={navigation.navigate}
                             isRegister={false}
