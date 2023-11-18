@@ -17,14 +17,7 @@ export const loginAdmin = async (data) => {
     const response = await axios.post(`${API_URL}/admin/login`, data);
     return response.data;
 };
-export const getUserId = async (token) => {
-    const response = await axios.get(`${API_URL}/user`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    return response.data;
-};
+
 export const getUserDetails = async (userId) => {
     const response = await axios.get(`${API_URL}/user/${userId}`);
     return response.data;
@@ -47,3 +40,10 @@ export const getEvent = async (eventId) => {
     console.log(response.data);
     return response.data;
 };
+export const eventRegister = async (eventId, userId) => {
+    const response = await axios.post(`${API_URL}/events/userreg`, {
+        eventId,
+        userId,
+    });
+    return response.data;
+}

@@ -12,7 +12,6 @@ const SignIn = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
-
     const closeAlert = () => {
         setShowAlert(false);
     };
@@ -36,6 +35,7 @@ const SignIn = ({ navigation }) => {
             // If the server responds with a success message, log in the user and navigate to the home screen
             if (response.message === "Login successful") {
                 await AsyncStorage.setItem("UserToken", response.token);
+                await AsyncStorage.setItem("email", response.email);
                 setAlertMessage("User logged in successfully");
                 setShowAlert(true);
                 if (selectedRole === "Admin") {
@@ -69,6 +69,7 @@ const SignIn = ({ navigation }) => {
                     placeholder="Password"
                     onChangeText={(text) => setPassword(text)}
                     secureTextEntry={!showPassword}
+                    outlined // Add this prop for outlined style
                 />
                 <IconButton
                     icon={showPassword ? "eye-off" : "eye"}
@@ -76,6 +77,7 @@ const SignIn = ({ navigation }) => {
                     style={styles.eyeIcon}
                 />
             </View>
+
             <View style={styles.radioContainer}>
                 <RadioButton.Group
                     onValueChange={(value) => setSelectedRole(value)}
@@ -134,6 +136,26 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginRight: 16,
+    },
+    passwordInputContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        height: 40,
+        borderColor: "gray",
+        borderWidth: 1,
+        marginBottom: 16,
+        paddingHorizontal: 8,
+    },
+
+    passwordInput: {
+        flex: 1,
+        height: 40,
+        padding: 8,
+    },
+
+    eyeIcon: {
+        position: "absolute",
+        right: 8,
     },
 });
 
