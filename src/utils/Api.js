@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-const API_URL = "http://192.168.89.214:8080";
+const API_URL = "http://192.168.111.223:8080";
 export const getAllEvents = async () => {
     const response = await axios.get(`${API_URL}/events`);
     return response.data;

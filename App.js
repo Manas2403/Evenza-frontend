@@ -21,8 +21,13 @@ import RegisterUser from "./src/screens/RegisterUser";
 import SignIn from "./src/screens/SignIn";
 import ApproveRegistration from "./src/screens/ApproveRegistration";
 import CreateSubEvent from "./src/screens/CreateSubevent";
+import { BackHandler } from "react-native";
+import { useNavigation } from "@react-navigation/native"
+import { useRoute } from "@react-navigation/native";
 const Stack = createNativeStackNavigator();
 export default function App() {
+
+  
     let [firstScreen, setFirstScreen] = useState("Register");
     const startUp = async () => {};
     useEffect(() => {

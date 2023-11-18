@@ -24,35 +24,36 @@ const SignIn = ({ navigation }) => {
             return;
         }
 
+        // Create a user data object with email and password
         const userData = {
             email,
             password,
         };
-
-        try {
-            const response = await loginUser(userData);
-            console.log(response);
-
-            if (response.message === "Login successful") {
-                await AsyncStorage.setItem("UserToken", response.token);
-                await AsyncStorage.setItem("email", email);
-                setAlertMessage("User logged in successfully");
-                setShowAlert(true);
-
-                if (selectedRole === "Admin") {
-                    navigation.navigate("AdminHome");
+         try {
+                // Send the user data to the server for verification
+                const response = await loginUser(userData);
+                console.log(response);
+                // If the server responds with a success message, log in the user and navigate to the home screen
+                if (response.message === "Login successful") {
+                    await AsyncStorage.setItem("UserToken", response.token);
+                    setAlertMessage("User logged in successfully");
+                    setShowAlert(true);
+                    if(selectedRole==="Admin"){
+                        navigation.navigate("AdminHome");
+                    }
+                    else{
+                        navigation.navigate("Home");
+                    }
+                    
                 } else {
-                    navigation.navigate("Home");
+                    setAlertMessage("User not found");
+                    setShowAlert(true);
                 }
-            } else {
-                setAlertMessage("User not found");
+            } catch (error) {
+                console.log(error);
+                setAlertMessage(`Error logging in user: ${error.message}`);
                 setShowAlert(true);
             }
-        } catch (error) {
-            console.log(error);
-            setAlertMessage(`Error logging in user: ${error.message}`);
-            setShowAlert(true);
-        }
     };
 
     return (
@@ -125,23 +126,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 16,
         paddingHorizontal: 8,
-    },
-    passwordInputContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 16,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 4,
-        paddingHorizontal: 8,
-    },
-    passwordInput: {
-        flex: 1,
-        height: 20,
-        marginBottom: 0,
-    },
-    eyeIcon: {
-        margin: 1,
     },
     radioContainer: {
         flexDirection: "row",
