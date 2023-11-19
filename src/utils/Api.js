@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-const API_URL = "http://192.168.111.223:8080";
-export const getAllEvents = async () => {
-    const response = await axios.get(`${API_URL}/events`);
+const API_URL = "http://192.168.89.214:8080";
+export const getAllEvents = async (email) => {
+    const response = await axios.get(`${API_URL}/events/${email}`);
     return response.data;
 };
 export const registerUser = async (data) => {
@@ -32,15 +32,14 @@ export const createEvent = async (formData) => {
     });
     return response.data;
 };
-export const createSubEvent = async (formData, email) => {
+export const createSubEvent = async (formData) => {
     const response = await axios.post(`${API_URL}/activity/new`, {
         formData,
-        email: email,
     });
     return response.data;
 };
 export const getEvent = async (eventId) => {
-    const response = await axios.get(`${API_URL}/events/${eventId}`);
+    const response = await axios.get(`${API_URL}/events/id/${eventId}`);
 
     console.log(response.data);
     return response.data;

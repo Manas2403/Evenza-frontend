@@ -34,6 +34,7 @@ const YourEvents = ({ navigation }) => {
                                     id: event._id,
                                 });
                             }}
+                            status="approved"
                         />
                     ))}
             </View>

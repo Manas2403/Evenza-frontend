@@ -26,9 +26,10 @@ const SearchBar = () => {
 const Home = ({ navigation }) => {
     const [events, setEvents] = useState(null);
     const getEvents = async () => {
-        const events = await getAllEvents();
-        console.log(events.events);
-        setEvents(events.events);
+        const email = await AsyncStorage.getItem("email");
+        const events = await getAllEvents(email);
+        console.log(events);
+        setEvents(events);
     };
     const [user, setUser] = useState(null);
 
@@ -62,24 +63,25 @@ const Home = ({ navigation }) => {
             <View className="px-4">
                 {events &&
                     user &&
-                    events.map((event) => (
+                    events.map((obj) => (
                         <EventCard
-                            key={event._id}
-                            title={event.title}
-                            date={event.startDate}
-                            venue={event.location}
+                            key={obj.event._id}
+                            title={obj.event.title}
+                            date={obj.event.startDate}
+                            venue={obj.event.location}
                             user={user.user._id}
-                            event={event._id}
-                            img={event.url}
+                            event={obj.event._id}
+                            img={obj.event.url}
                             registered={true}
-                            registerationCount={event.capacity}
+                            registerationCount={obj.event.capacity}
                             onClick={() => {
                                 navigation.navigate("EventDetails", {
-                                    id: event._id,
+                                    id: obj.event._id,
                                     userId: user.user._id,
                                 });
                             }}
                             isRegister={true}
+                            status={obj.status}
                         />
                     ))}
             </View>

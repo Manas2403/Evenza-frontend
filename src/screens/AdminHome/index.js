@@ -26,15 +26,16 @@ const SearchBar = () => {
 const AdminHome = ({ navigation }) => {
     const [events, setEvents] = useState(null);
     const getEvents = async () => {
-        const event = await getAllEvents();
-        console.log(event.events);
-        setEvents(event.events);
+        const email = await AsyncStorage.getItem("email");
+
+        const event = await getAllEvents(email);
+        console.log(event);
+        setEvents(event);
     };
-    const email=AsyncStorage.getItem("email")
+    const email = AsyncStorage.getItem("email");
     useEffect(() => {
-        getEvents()
+        getEvents();
     }, []);
-    console.log(events)
     return (
         <ScrollView>
             <View className="p-4">
@@ -44,7 +45,7 @@ const AdminHome = ({ navigation }) => {
                 <Button
                     className="font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
                     onPress={() => {
-                        navigation.navigate("CreateEvent",{email:email});
+                        navigation.navigate("CreateEvent", { email: email });
                     }}
                 >
                     Create Event
@@ -57,28 +58,22 @@ const AdminHome = ({ navigation }) => {
                 >
                     Past Events
                 </Button>
-                <Button
-                    className="font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
-                    onPress={() => {
-                        navigation.navigate("QRScanner");
-                    }}
-                >
-                    Scan QR
-                </Button>
             </View>
             <View className="px-4">
                 {events &&
-                    events.map((event) => (
+                    events.map((obj) => (
                         <AdminEventCard
-                            id={event._id}
-                            title={event.title}
-                            date={event.startDate}
-                            venue={event.location}
-                            img={event.url}
+                            id={obj.event._id}
+                            title={obj.event.title}
+                            date={obj.event.startDate}
+                            venue={obj.event.location}
+                            img={obj.event.url}
                             registered={true}
-                            registerationCount={event.capacity}
+                            registerationCount={obj.event.capacity}
                             onClick={() => {
-                                navigation.navigate("EventDetails",{id:event._id});
+                                navigation.navigate("EventDetails", {
+                                    id: obj.event._id,
+                                });
                             }}
                             navigate={navigation.navigate}
                             isRegister={false}

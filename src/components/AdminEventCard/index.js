@@ -44,7 +44,11 @@ const AdminEventCard = (props) => {
                     <View className="flex-row justify-right">
                         <Button
                             className="w-1/2 m-2 font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
-                            onPress={()=>{props.navigate("RequestManagement",{id:props.id})}}
+                            onPress={() => {
+                                props.navigate("RequestManagement", {
+                                    id: props.id,
+                                });
+                            }}
                         >
                             {props.isRegister
                                 ? "Register"

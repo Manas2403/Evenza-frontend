@@ -17,11 +17,17 @@ export default function EventDetails({ route, navigation }) {
     const { id, userId } = route.params;
     const [event, setEvent] = useState(null);
     const [activities, setActivities] = useState(null);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null),
+        [status, setStatus] = useState(null);
     async function getEventDetails() {
-        const { event, activities } = await getEvent(id);
-        setEvent(event);
+        const { currentEvent, activities } = await getEvent(id);
+        setEvent(currentEvent);
         setActivities(activities);
+        const token = await AsyncStorage.getItem("email");
+        let user = currentEvent.requests.filter(
+            (item) => item.user.email === token
+        );
+        setStatus(user[0]?.status);
     }
     async function getUserDetail() {
         const token = await AsyncStorage.getItem("email");
@@ -66,7 +72,6 @@ export default function EventDetails({ route, navigation }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     </head>
     <body style="text-align: center;">
-      ${qrCodeToSvgString(user?.qr, 200)}
         <h2 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
         ${user?.name}
         </h2>
@@ -114,8 +119,34 @@ export default function EventDetails({ route, navigation }) {
                         <FlatList
                             data={activities}
                             renderItem={({ item }) => (
-                                <View>
+                                <View className="flex flex-row justify-between m-2 items-center">
                                     <Item title={item.title} />
+                                    <View className="flex flex-row justify-center items-center ">
+                                        {user?.isAdmin && (
+                                            <Button
+                                                className="font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 mr-4 "
+                                                onPress={() => {
+                                                    navigation.navigate(
+                                                        "QRScanner"
+                                                    );
+                                                }}
+                                            >
+                                                Scan QR
+                                            </Button>
+                                        )}
+                                        {user?.isAdmin && (
+                                            <Button
+                                                className="font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
+                                                onPress={() => {
+                                                    navigation.navigate(
+                                                        "Attendees"
+                                                    );
+                                                }}
+                                            >
+                                                Attendees
+                                            </Button>
+                                        )}
+                                    </View>
                                 </View>
                             )}
                             keyExtractor={(item) => item.id}
@@ -127,25 +158,41 @@ export default function EventDetails({ route, navigation }) {
                         <Text variant="bodySmall">{event?.location}</Text>
                     </View>
                     <View className="flex flex-col gap-y-2  justify-center items-center">
-                        <Button className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 ">
-                            Register
-                        </Button>
-                        <Button
-                            className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
-                            onPress={printToFile}
-                        >
-                            Download ID-Card
-                        </Button>
-                        <Button
-                            className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
-                            onPress={() => {
-                                return navigation.navigate(
-                                    "Request Management"
-                                );
-                            }}
-                        >
-                            Approve Requests
-                        </Button>
+                        {!user?.isAdmin && (
+                            <Button
+                                className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
+                                disabled={status === "none" ? false : true}
+                            >
+                                {status === "none"
+                                    ? "Register"
+                                    : status === "pending"
+                                    ? "Pending"
+                                    : status === "approved"
+                                    ? "Approved"
+                                    : "Declined"}
+                            </Button>
+                        )}
+                        {!user?.isAdmin && (
+                            <Button
+                                className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
+                                onPress={printToFile}
+                            >
+                                Download ID-Card
+                            </Button>
+                        )}
+                        {user?.isAdmin && (
+                            <Button
+                                className="w-full font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
+                                onPress={() => {
+                                    return navigation.navigate(
+                                        "RequestManagement",
+                                        { id: event._id }
+                                    );
+                                }}
+                            >
+                                Approve Requests
+                            </Button>
+                        )}
                     </View>
                 </View>
             </ScrollView>

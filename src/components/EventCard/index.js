@@ -8,15 +8,18 @@ const EventCard = (props) => {
     const [visible, setVisible] = useState(false);
     const showDialog = () => setVisible(true);
     const hideDialog = () => setVisible(false);
-    const handleRegisteration =async(userId,eventId)=>{ 
-        console.log(userId,eventId)
-        const response=await eventRegister(eventId,userId)
-        console.log(response)
-    }
+    const handleRegisteration = async (userId, eventId) => {
+        console.log(userId, eventId);
+        const response = await eventRegister(eventId, userId);
+        console.log(response);
+    };
     const utcMoment = moment(props.date);
     const istMoment = utcMoment.add(5, "hours").add(30, "minutes");
     const istTimeString = istMoment.format("YYYY-MM-DD");
-    
+    const handleConfirmation = () => {
+        handleRegisteration(props.user, props.event);
+        hideDialog();
+    };
     return (
         <>
             <Card className="my-3" onPress={props.onClick}>
@@ -51,10 +54,15 @@ const EventCard = (props) => {
                                 ? showDialog
                                 : props.onClick
                         }
+                        disabled={props.status === "none" ? false : true}
                     >
-                        {props.isRegister
+                        {props.status === "none"
                             ? "Register"
-                            : "Approve Registrations"}
+                            : props.status === "pending"
+                            ? "Pending"
+                            : props.status === "approved"
+                            ? "Approved"
+                            : "Declined"}
                     </Button>
                 </Card.Actions>
             </Card>
@@ -68,7 +76,7 @@ const EventCard = (props) => {
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={hideDialog}>Cancel</Button>
-                        <Button onPress={()=>handleRegisteration(props.user,props.event)}>Confirm</Button>
+                        <Button onPress={handleConfirmation}>Confirm</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
