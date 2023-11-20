@@ -22,13 +22,12 @@ import SignIn from "./src/screens/SignIn";
 import ApproveRegistration from "./src/screens/ApproveRegistration";
 import CreateSubEvent from "./src/screens/CreateSubevent";
 import { BackHandler } from "react-native";
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
+import Attendees from "./src/screens/Attendees";
 // import RequestManagement from "./src/screens/RequestManagement";
 const Stack = createNativeStackNavigator();
 export default function App() {
-
-  
     let [firstScreen, setFirstScreen] = useState("Register");
     const startUp = async () => {};
     useEffect(() => {
@@ -86,6 +85,7 @@ export default function App() {
                         component={CreateSubEvent}
                     />
                     <Stack.Screen name="SignIn" component={SignIn} />
+                    <Stack.Screen name="Attendees" component={Attendees} />
                 </Stack.Navigator>
             </NavigationContainer>
         </PaperProvider>
