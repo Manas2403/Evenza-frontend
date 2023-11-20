@@ -5,6 +5,8 @@ import HorizontalLine from "../Horizontal Line";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import MessagePrompt from "../MessagePrompt";
+
 const UserData = ({ userData }) => {
     const navigation = useNavigation();
     function handleSignout() {
@@ -14,6 +16,11 @@ const UserData = ({ userData }) => {
     const [visible, setVisible] = useState(false);
     const showDialog = () => setVisible(true);
     const hideDialog = () => setVisible(false);
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const closeAlert = () => {
+        setShowAlert(false);
+    };
     return (
         <>
             <View className="mt-2 pb-8">

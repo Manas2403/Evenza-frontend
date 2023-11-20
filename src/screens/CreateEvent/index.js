@@ -4,6 +4,7 @@ import { TextInput, Button } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import { DatePickerModal } from "react-native-paper-dates";
 import { createEvent } from "../../utils/Api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const styles = StyleSheet.create({
     container: {
         padding: 16,
@@ -48,9 +49,14 @@ const CreateEvent = ({ route }) => {
         const numericInput = text.replace(/[^0-9]/g, "");
         setEventData({ ...eventData, capacity: numericInput });
     };
-
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const closeAlert = () => {
+        setShowAlert(false);
+    };
     const handleCreate = async () => {
         try {
+            const adminMail = await AsyncStorage.getItem("email");
             const formData = new FormData();
             formData.append("title", eventData.title);
             formData.append("description", eventData.description);
@@ -72,11 +78,15 @@ const CreateEvent = ({ route }) => {
                 });
             }
 
-            const response = await createEvent(formData, adminMail);
+            const response = await createEvent(formData);
 
             console.log("Event created successfully:", response.data);
+            setAlertMessage("Event created successfully");
+            setShowAlert(true);
         } catch (error) {
             console.error("Error creating event:", error.message);
+            setAlertMessage(`Error creating event: ${error.message}`);
+            setShowAlert(true);
         }
     };
 
@@ -142,6 +152,11 @@ const CreateEvent = ({ route }) => {
                     Create
                 </Button>
             </View>
+            <MessagePrompt
+                visible={showAlert}
+                message={alertMessage}
+                onClose={closeAlert}
+            />
         </ScrollView>
     );
 };
