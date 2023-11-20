@@ -7,7 +7,6 @@ const ApprovalCard = (props) => {
         const user = props.user;
         const event = props.event;
         const response = await approveRegisteration(event, user, value);
-        console.log(response);
     };
     return (
         <>

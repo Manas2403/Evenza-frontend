@@ -10,7 +10,6 @@ const YourEvents = ({ navigation }) => {
     const getEvents = async () => {
         const userEmail = await AsyncStorage.getItem("email");
         const user = await getUserDetails(userEmail);
-        console.log(user.user.registered);
         setEvents(user.user.registered);
     };
     useEffect(() => {

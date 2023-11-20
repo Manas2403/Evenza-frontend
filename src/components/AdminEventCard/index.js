@@ -13,7 +13,6 @@ const AdminEventCard = (props) => {
     const utcMoment = moment(props.date);
     const istMoment = utcMoment.add(5, "hours").add(30, "minutes");
     const istTimeString = istMoment.format("YYYY-MM-DD");
-    console.log(props.img);
     return (
         <>
             <Card className="my-3" onPress={props.onClick}>

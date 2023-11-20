@@ -29,7 +29,6 @@ const AdminHome = ({ navigation }) => {
         const email = await AsyncStorage.getItem("email");
 
         const event = await getAllEvents(email);
-        console.log(event);
         setEvents(event);
     };
     const email = AsyncStorage.getItem("email");
@@ -67,7 +66,6 @@ const AdminHome = ({ navigation }) => {
                             title={obj.event.title}
                             date={obj.event.startDate}
                             venue={obj.event.location}
-                            
                             img={obj.event.url}
                             registered={true}
                             registerationCount={obj.event.capacity}

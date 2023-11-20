@@ -31,7 +31,6 @@ const SignIn = ({ navigation }) => {
         try {
             // Send the user data to the server for verification
             const response = await loginUser(userData);
-            console.log(response);
             // If the server responds with a success message, log in the user and navigate to the home screen
             if (response.message === "Login successful") {
                 await AsyncStorage.setItem("UserToken", response.token);

@@ -19,13 +19,11 @@ export const loginAdmin = async (data) => {
 };
 
 export const getUserDetails = async (userId) => {
-    console.log(userId);
     const response = await axios.get(`${API_URL}/user/${userId}`);
     return response.data;
 };
 
 export const createEvent = async (formData) => {
-    console.log(formData);
     const response = await axios.post(`${API_URL}/events/new`, formData, {
         headers: {
             "Content-Type": "multipart/form-data",
@@ -34,7 +32,6 @@ export const createEvent = async (formData) => {
     return response.data;
 };
 export const createSubEvent = async (formData) => {
-    console.log(formData);
     const response = await axios.post(`${API_URL}/activity/new`, {
         formData,
     });
@@ -43,7 +40,6 @@ export const createSubEvent = async (formData) => {
 export const getEvent = async (eventId) => {
     const response = await axios.get(`${API_URL}/events/id/${eventId}`);
 
-    console.log(response.data);
     return response.data;
 };
 export const eventRegister = async (eventId, userId) => {

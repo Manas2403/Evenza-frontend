@@ -6,7 +6,6 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const UserData = ({ userData }) => {
-    console.log(userData);
     const navigation = useNavigation();
     function handleSignout() {
         AsyncStorage.removeItem("UserToken");

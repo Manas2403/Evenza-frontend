@@ -19,11 +19,8 @@ export default function QRScanner({ route }) {
 
     const handleBarCodeScanned = async ({ type, data }) => {
         setScanned(true);
-        console.log(data);
         alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-        console.log({ activityId, email, data });
         const response = await markAttendance(activityId, email, data);
-        console.log(response);
     };
 
     if (hasPermission === null) {

@@ -34,9 +34,7 @@ const RegisterUser = ({ navigation }) => {
         };
 
         try {
-            console.log(userData);
             const response = await registerUser(userData);
-            console.log(response);
             setAlertMessage("User registered successfully");
             setShowAlert(true);
             navigation.navigate("SignIn");

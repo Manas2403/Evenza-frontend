@@ -28,7 +28,6 @@ const Home = ({ navigation }) => {
     const getEvents = async () => {
         const email = await AsyncStorage.getItem("email");
         const events = await getAllEvents(email);
-        console.log(events);
         setEvents(events);
     };
     const [user, setUser] = useState(null);
@@ -36,9 +35,7 @@ const Home = ({ navigation }) => {
     const getUserDetail = async () => {
         const token = await AsyncStorage.getItem("email");
         const user = await getUserDetails(token);
-        console.log(token);
-        console.log(user);
-        console.log(user.user._id);
+
         setUser(user);
     };
     useEffect(() => {

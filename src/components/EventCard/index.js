@@ -9,9 +9,7 @@ const EventCard = (props) => {
     const showDialog = () => setVisible(true);
     const hideDialog = () => setVisible(false);
     const handleRegisteration = async (userId, eventId) => {
-        console.log(userId, eventId);
         const response = await eventRegister(eventId, userId);
-        console.log(response);
     };
     const utcMoment = moment(props.date);
     const istMoment = utcMoment.add(5, "hours").add(30, "minutes");
