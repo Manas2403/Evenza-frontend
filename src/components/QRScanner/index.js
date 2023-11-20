@@ -3,7 +3,13 @@ import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { markAttendance } from "../../utils/Api";
+import MessagePrompt from "../MessagePrompt";
 export default function QRScanner({ route }) {
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const closeAlert = () => {
+        setShowAlert(false);
+    };
     const { activityId, email } = route.params;
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
@@ -19,8 +25,9 @@ export default function QRScanner({ route }) {
 
     const handleBarCodeScanned = async ({ type, data }) => {
         setScanned(true);
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
         const response = await markAttendance(activityId, email, data);
+        setAlertMessage("Attendance Marked");
+        setShowAlert(true);
     };
 
     if (hasPermission === null) {
@@ -46,6 +53,11 @@ export default function QRScanner({ route }) {
                     onPress={() => setScanned(false)}
                 />
             )}
+            <MessagePrompt
+                visible={showAlert}
+                message={alertMessage}
+                onClose={closeAlert}
+            />
         </View>
     );
 }
