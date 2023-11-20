@@ -67,6 +67,7 @@ const AdminHome = ({ navigation }) => {
                             title={obj.event.title}
                             date={obj.event.startDate}
                             venue={obj.event.location}
+                            
                             img={obj.event.url}
                             registered={true}
                             registerationCount={obj.event.capacity}

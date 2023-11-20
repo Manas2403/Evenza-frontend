@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
 });
 
 const CreateEvent = ({route}) => {
-  const adminMail = route.params.email
   const [eventData, setEventData] = useState({
     title: "",
     description: "",
@@ -62,6 +61,7 @@ console.log(eventData)
        formData.append("regDeadline", eventData.regDeadline.toString());
        formData.append("capacity", eventData.capacity);
        formData.append("regFee", eventData.regFee);
+       formData.append("email",adminMail)
       console.log(formData)
        if (selectedImage) {
          const fileName = selectedImage.split("/").pop();

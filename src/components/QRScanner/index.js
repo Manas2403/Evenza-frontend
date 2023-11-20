@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import QRCodeScanner from "react-native-qrcode-scanner";
-
-export default function QRScanner() {
+import { markAttendance } from "../../utils/Api";
+export default function QRScanner({route}) 
+{
+    const {activityId,email}=route.params
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
 
@@ -16,9 +18,14 @@ export default function QRScanner() {
         getBarCodeScannerPermissions();
     }, []);
 
-    const handleBarCodeScanned = ({ type, data }) => {
+    const handleBarCodeScanned =async ({ type, data }) => 
+    {
         setScanned(true);
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+        console.log(data);
+        alert(`Bar code with type ${type} and data ${data} has been scanned!`) ;
+        console.log({activityId,email,data});
+        const response=await markAttendance(activityId,email,data);
+        console.log(response.errMess);
     };
 
     if (hasPermission === null) {

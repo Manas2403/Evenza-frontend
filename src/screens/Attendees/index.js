@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import ApprovalCard from "../../components/ApprovalCard";
-import { getApprovals } from "../../utils/Api";
+import { getAttendees } from "../../utils/Api";
 export default function RequestManagement({ navigation, route }) {
-    const [approvals, setApprovals] = useState(null);
+    const [attendees, setAttendees] = useState(null);
     const getApproval = async () => {
-        const eventId = route.params.id;
-        const approvals = await getApprovals(eventId);
-        setApprovals(approvals);
-        console.log(approvals);
+        const {eventId,activityId }= route.params;
+        const attendee = await getAttendees(eventId,activityId);
+        setApprovals(attendee);
+        console.log(attendee);
     };
     useEffect(() => {
         getApproval();
@@ -18,7 +18,7 @@ export default function RequestManagement({ navigation, route }) {
             <ScrollView>
                 <View className="p-4 flex flex-col ">
                     <View className="flex flex-col gap-4">
-                        {approvals?.map(
+                        {/* {approvals?.map(
                             (approval) =>
                                 approval.status === "pending" && (
                                     <ApprovalCard
@@ -27,7 +27,7 @@ export default function RequestManagement({ navigation, route }) {
                                         user={approval.user}
                                     />
                                 )
-                        )}
+                        )} */}
                     </View>
                 </View>
             </ScrollView>

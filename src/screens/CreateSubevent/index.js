@@ -46,6 +46,7 @@ console.log(eventData)
  };
   const handleCreate = async () => {
     try {
+      console.log(eventData)
       const response = await createSubEvent(eventData);
       console.log(response);
       // Show success message

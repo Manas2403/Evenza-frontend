@@ -127,7 +127,10 @@ export default function EventDetails({ route, navigation }) {
                                                 className="font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 mr-4 "
                                                 onPress={() => {
                                                     navigation.navigate(
-                                                        "QRScanner"
+                                                        "QRScanner",{
+                                                            activityId:item._id,
+                                                            email:user.email
+                                                        }
                                                     );
                                                 }}
                                             >
@@ -139,7 +142,10 @@ export default function EventDetails({ route, navigation }) {
                                                 className="font-semibold text-lg bg-purple-200 border rounded-lg border-purple-400 "
                                                 onPress={() => {
                                                     navigation.navigate(
-                                                        "Attendees"
+                                                        "Attendees",{
+                                                            activityId:item._id,
+                                                            eventId:event._id
+                                                        }
                                                     );
                                                 }}
                                             >

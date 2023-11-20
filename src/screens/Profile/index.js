@@ -20,7 +20,7 @@ const Profile = () => {
     return (
         <ScrollView>
             <View>
-                <QR qr={userData.qr} />
+                <QR qr={userData.email} />
                 <UserData userData={userData} />
             </View>
         </ScrollView>
